@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pontograve.com.br/sitemap.xml
