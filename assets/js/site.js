@@ -164,6 +164,9 @@
     const rotulo = document.createElement('div'); rotulo.className = 'nome-corda'; cordasEl.append(rotulo);
     const aviso = document.createElement('div'); aviso.className = 'aviso-corda'; aviso.textContent = toque ? 'Toque uma corda para ouvir 👇' : 'Clique numa corda para ouvir 👇'; cordasEl.parentElement.append(aviso);
     cordasEl.addEventListener('pointerenter', () => carregarAmostras(), { once: true });
+    // no celular não há "passar o mouse": carrega as gravações assim que as cordas aparecem na tela
+    const obsSom = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { carregarAmostras(); obsSom.disconnect(); } });
+    obsSom.observe(cordasEl);
     let W = 0, H = 0;
     const est = CORDAS.map(c => ({ ...c, amp: 0, fase: 0, px: 0.5, el: document.createElementNS(NS, 'path'), rot: document.createElementNS(NS, 'text') }));
     est.forEach(s => { s.el.setAttribute('stroke-width', s.esp); svg.append(s.el); s.rot.setAttribute('class', 'nome'); s.rot.textContent = s.nome; svg.append(s.rot); });
@@ -183,7 +186,9 @@
     cordasEl.addEventListener('click', e => {
       const r = cordasEl.getBoundingClientRect(), y = e.clientY - r.top;
       const s = est.reduce((a, b) => Math.abs(b.y - y) < Math.abs(a.y - y) ? b : a); tangida(s, e.clientX - r.left, 0.9);
-      aviso.classList.add('some'); audio(); carregarAmostras(); tocarCorda('corda-' + s.nome, s.midi, 0.85);
+      aviso.classList.add('some'); audio();
+      if (gravadas[s.midi]) tocarCorda('corda-' + s.nome, s.midi, 0.85);
+      else Promise.race([carregarAmostras(), new Promise(r => setTimeout(r, 600))]).then(() => tocarCorda('corda-' + s.nome, s.midi, 0.85));
     });
     // desenho: a corda se curva a partir do ponto onde foi tocada e oscila até parar
     let t0 = performance.now();
@@ -242,6 +247,8 @@
     // ao aparecer: só a luz, sem som (o som fica para quem pede)
     new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { demo(false); o.disconnect(); } }), { threshold: .6 }).observe(braco);
     $$('.tocar-desenho').forEach(bt => bt.addEventListener('click', () => { audio(); carregarAmostras().then(() => demo(true)); }));
+    const obsDes = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { carregarAmostras(); obsDes.disconnect(); } });
+    $$('.tocar-desenho').forEach(bt => obsDes.observe(bt));
   }
 
   /* ---------- Conteúdo por data: data-ate (some na data) e data-desde (aparece na data) ---------- */

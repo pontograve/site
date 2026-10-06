@@ -362,3 +362,6 @@ body.tema-claro .passo-braco { color: var(--ouro-e); }
 .toast.ve { opacity: 1; transform: translate(-50%, 0); }
 /* Capas que não podem ser cortadas (diagramas): encaixam inteiras */
 .encaixar img { object-fit: contain !important; background: #FFFFFF; }
+/* aviso "Toque uma corda" acima das cordas, sem cobrir a A e a E */
+body.tema-claro .aviso-corda { bottom: calc(4vh + 158px); }
+@media (max-width: 960px) { body.tema-claro .aviso-corda { bottom: calc(4vh - 22px); white-space: nowrap; font-size: 12px; padding: 6px 14px; } }
