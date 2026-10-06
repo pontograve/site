@@ -212,10 +212,8 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
 .faq details[open] summary::after { transform: rotate(45deg); }
 .faq p { color: var(--cinza); margin: 14px 0 0; }
 .garantia { display: flex; gap: 30px; align-items: center; padding: 36px; border-radius: var(--raio); background: var(--card); border: 1px solid var(--linha); }
-.garantia .selo-g { flex: none; width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center; text-align: center; color: var(--preto);
-  background: radial-gradient(circle at 35% 30%, #F3D58E, var(--ouro) 55%, var(--ouro-e)); font: 700 12px var(--t-texto); letter-spacing: .14em; animation: girar 18s linear infinite; }
-.garantia .selo-g b { display: block; font: 400 44px/1 var(--t-titulo); letter-spacing: 0; }
-@keyframes girar { to { transform: rotate(360deg); } }
+.garantia .selo-svg { flex: none; width: 170px; height: auto; filter: drop-shadow(0 14px 28px rgba(0,0,0,.45)); }
+@media (max-width: 640px) { .garantia { flex-direction: column; text-align: center; padding: 30px 22px; gap: 18px; } .garantia .selo-svg { width: 190px; } }
 
 /* ---------- Rodapé ---------- */
 .rodape { border-top: 1px solid var(--linha); padding: 80px 0 40px; margin-top: 40px; }
