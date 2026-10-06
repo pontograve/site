@@ -381,8 +381,8 @@ body.tema-claro .aviso-corda { bottom: calc(4vh + 158px); }
   background: var(--preto); color: var(--marfim); }
 .ouvir-botoes a + a { background: transparent; color: inherit; border: 1.5px solid currentColor; }
 /* bloco do app: celular com a tela real */
-.app-bloco { display: grid; grid-template-columns: 240px 1fr; gap: 56px; align-items: center; padding: 40px 50px; border-radius: 28px; background: var(--card); border: 1px solid var(--linha); overflow: hidden; }
-.app-celular { display: block; margin: -10px 0 -60px; }
+.app-bloco { display: grid; grid-template-columns: 220px 1fr; gap: 56px; align-items: center; padding: 40px 50px 44px; border-radius: 28px; background: var(--card); border: 1px solid var(--linha); overflow: hidden; }
+.app-celular { display: block; margin: 0; }
 .app-celular img { width: 100%; height: auto; display: block; filter: drop-shadow(0 24px 34px rgba(40, 28, 15, .28)); transition: transform .5s cubic-bezier(.2, .8, .2, 1); }
 .app-celular:hover img { transform: translateY(-8px) rotate(-1deg); }
 body.tema-claro .app-bloco { background: #FBF8F3; border-color: var(--linha-c, #E4DCCF); }
