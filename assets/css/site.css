@@ -365,3 +365,12 @@ body.tema-claro .passo-braco { color: var(--ouro-e); }
 /* aviso "Toque uma corda" acima das cordas, sem cobrir a A e a E */
 body.tema-claro .aviso-corda { bottom: calc(4vh + 158px); }
 @media (max-width: 960px) { body.tema-claro .aviso-corda { bottom: calc(4vh - 22px); white-space: nowrap; font-size: 12px; padding: 6px 14px; } }
+.braco-arraste { display: none; }
+/* braço no celular: tamanho legível, rolando de lado (começa no Desenho 1) */
+@media (max-width: 760px) {
+  .braco-grid > * { min-width: 0; }
+  .braco { max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 22px 12px 28px; }
+  .braco::-webkit-scrollbar { display: none; }
+  .braco svg { width: 780px; max-width: none; }
+  .braco-arraste { display: block; margin-top: 10px; font: 600 13px var(--t-texto); color: var(--cinza); letter-spacing: .04em; }
+}

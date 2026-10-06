@@ -232,21 +232,37 @@
       g.addEventListener('pointerenter', acender); g.addEventListener('click', acender);
       braco.append(g);
     } });
+    // celular: o braço rola de lado; começa mostrando o Desenho 1 e avisa que dá para arrastar
+    const caixaB = braco.closest('.braco');
+    if (caixaB && caixaB.scrollWidth > caixaB.clientWidth + 4) {
+      caixaB.scrollLeft = (caixaB.scrollWidth - caixaB.clientWidth) * 0.45;
+      const dica = document.createElement('div'); dica.className = 'braco-arraste'; dica.textContent = '↔ Arraste para ver o braço inteiro';
+      caixaB.after(dica);
+    }
     // demonstração: o Desenho 1 (casas 5 a 8) sobe e desce, nota a nota, quando o braço aparece na tela
     const desenho = notas.filter(n => n.casa >= 5 && n.casa <= 8).sort((a, b) => a.midi - b.midi);
     const seq = [...desenho, ...desenho.slice(0, -1).reverse()];
-    let rodando = false;
+    let rodando = false, comSomAtual = false, timers = [];
     const passo = document.querySelector('.passo-braco');
     const NOMES = { 9: 'Lá', 0: 'Dó', 2: 'Ré', 4: 'Mi', 7: 'Sol' };
-    const demo = comSom => { if (rodando || reduz) return; rodando = true;
-      seq.forEach((n, k) => setTimeout(() => {
+    const parar = () => { timers.forEach(clearTimeout); timers = []; notas.forEach(n => n.g.classList.remove('acesa')); rodando = false; };
+    // o botão (com som) sempre funciona: interrompe a demonstração muda e toca mesmo com "reduzir movimento"
+    const demo = comSom => {
+      if (rodando && (comSomAtual || !comSom)) return;
+      if (!comSom && reduz) return;
+      parar(); rodando = true; comSomAtual = comSom;
+      seq.forEach((n, k) => timers.push(setTimeout(() => {
         n.g.classList.add('acesa'); if (comSom) tocar(n.midi, .7, k === seq.length - 1 ? 2.2 : 0.34); setTimeout(() => n.g.classList.remove('acesa'), 380);
         if (passo) passo.textContent = `${k + 1} de ${seq.length} · ${NOMES[n.midi % 12]}`;
-        if (k === seq.length - 1) { rodando = false; setTimeout(() => { if (passo && !rodando) passo.textContent = comSom ? 'Agora tente no seu baixo: casas 5 a 8, começando no Lá.' : ''; }, 600); }
-      }, k * (comSom ? 300 : 220))); };
+        if (k === seq.length - 1) { rodando = false; timers.push(setTimeout(() => { if (passo && !rodando) passo.textContent = comSom ? 'Agora tente no seu baixo: casas 5 a 8, começando no Lá.' : ''; }, 600)); }
+      }, k * (comSom ? 300 : 220)))); };
     // ao aparecer: só a luz, sem som (o som fica para quem pede)
     new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { demo(false); o.disconnect(); } }), { threshold: .6 }).observe(braco);
-    $$('.tocar-desenho').forEach(bt => bt.addEventListener('click', () => { audio(); carregarAmostras().then(() => demo(true)); }));
+    $$('.tocar-desenho').forEach(bt => bt.addEventListener('click', () => {
+      audio(); Promise.race([carregarAmostras(), new Promise(r => setTimeout(r, 800))]).then(() => demo(true));
+      // no celular o braço rola de lado: centraliza o Desenho 1 ao tocar
+      const caixa = braco.closest('.braco'); if (caixa && caixa.scrollWidth > caixa.clientWidth) caixa.scrollTo({ left: (caixa.scrollWidth - caixa.clientWidth) * 0.45, behavior: 'smooth' });
+    }));
     const obsDes = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { carregarAmostras(); obsDes.disconnect(); } });
     $$('.tocar-desenho').forEach(bt => obsDes.observe(bt));
   }
