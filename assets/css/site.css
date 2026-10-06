@@ -390,3 +390,4 @@ body.tema-claro .app-bloco { background: #FBF8F3; border-color: var(--linha-c, #
   .app-bloco { grid-template-columns: 1fr; gap: 26px; padding: 30px 24px 34px; text-align: left; }
   .app-celular { width: 62%; max-width: 240px; margin: 0 auto -6px; }
 }
+.credito-foto { margin-top: 40px; font-size: 13px; color: var(--cinza); } .credito-foto a { color: inherit; }
