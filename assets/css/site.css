@@ -374,3 +374,9 @@ body.tema-claro .aviso-corda { bottom: calc(4vh + 158px); }
   .braco svg { width: 780px; max-width: none; }
   .braco-arraste { display: block; margin-top: 10px; font: 600 13px var(--t-texto); color: var(--cinza); letter-spacing: .04em; }
 }
+/* "Para ouvir" nos artigos: título clicável e botões YouTube / Spotify */
+.ouvir-link { color: inherit; text-decoration: underline; text-decoration-color: var(--ouro); text-underline-offset: 3px; }
+.ouvir-botoes { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 4px; }
+.ouvir-botoes a { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 30px; font: 700 13px var(--t-texto); letter-spacing: .04em; text-decoration: none;
+  background: var(--preto); color: var(--marfim); }
+.ouvir-botoes a + a { background: transparent; color: inherit; border: 1.5px solid currentColor; }
