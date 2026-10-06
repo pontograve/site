@@ -380,3 +380,13 @@ body.tema-claro .aviso-corda { bottom: calc(4vh + 158px); }
 .ouvir-botoes a { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 30px; font: 700 13px var(--t-texto); letter-spacing: .04em; text-decoration: none;
   background: var(--preto); color: var(--marfim); }
 .ouvir-botoes a + a { background: transparent; color: inherit; border: 1.5px solid currentColor; }
+/* bloco do app: celular com a tela real */
+.app-bloco { display: grid; grid-template-columns: 240px 1fr; gap: 56px; align-items: center; padding: 40px 50px; border-radius: 28px; background: var(--card); border: 1px solid var(--linha); overflow: hidden; }
+.app-celular { display: block; margin: -10px 0 -60px; }
+.app-celular img { width: 100%; height: auto; display: block; transition: transform .5s cubic-bezier(.2, .8, .2, 1); }
+.app-celular:hover img { transform: translateY(-8px) rotate(-1deg); }
+body.tema-claro .app-bloco { background: #FBF8F3; border-color: var(--linha-c, #E4DCCF); }
+@media (max-width: 760px) {
+  .app-bloco { grid-template-columns: 1fr; gap: 26px; padding: 30px 24px 34px; text-align: left; }
+  .app-celular { width: 62%; max-width: 240px; margin: 0 auto -6px; }
+}
