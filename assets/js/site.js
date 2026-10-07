@@ -72,8 +72,9 @@
     comp.connect(vol).connect(ac.destination);
     return (saidaGravada = comp);
   };
-  function tocar(midi, forca = 0.8, dur = 1.6) {
-    const ac = audio(), t0 = ac.currentTime, rec = gravadas[midi];
+  // quando: horário no relógio de áudio (agendar a sequência inteira evita atrasos e "engasgos" no celular)
+  function tocar(midi, forca = 0.8, dur = 1.6, quando = 0) {
+    const ac = audio(), t0 = Math.max(ac.currentTime, quando), rec = gravadas[midi];
     const src = ac.createBufferSource(), g = ac.createGain();
     if (rec) { src.buffer = rec; src.connect(g).connect(cadeiaGravada()); }
     else { src.buffer = buffer(440 * Math.pow(2, (midi - 69) / 12)); src.connect(g).connect(cadeia()); }
@@ -171,8 +172,8 @@
     const est = CORDAS.map(c => ({ ...c, amp: 0, fase: 0, px: 0.5, el: document.createElementNS(NS, 'path'), rot: document.createElementNS(NS, 'text') }));
     est.forEach(s => { s.el.setAttribute('stroke-width', s.esp); svg.append(s.el); s.rot.setAttribute('class', 'nome'); s.rot.textContent = s.nome; svg.append(s.rot); });
     const medir = () => { const r = cordasEl.getBoundingClientRect(); W = r.width; H = r.height; svg.setAttribute('viewBox', `0 0 ${W} ${H}`); est.forEach((s, i) => { s.y = H * (0.18 + i * 0.22); s.rot.setAttribute('x', 14); s.rot.setAttribute('y', s.y + 4); }); };
-    medir(); addEventListener('resize', medir);
-    const tangida = (s, x, forca) => { rotulo.textContent = `${s.nota} (${s.nome})`; rotulo.style.left = x + 'px'; rotulo.style.top = s.y + 'px'; rotulo.classList.add('ve'); clearTimeout(rotulo.t); rotulo.t = setTimeout(() => rotulo.classList.remove('ve'), 900); s.px = Math.min(.92, Math.max(.08, x / W)); s.amp = Math.min(26, 6 + forca * 22); s.fase = 0;  };
+    medir(); addEventListener('resize', () => { medir(); animar(); });
+    const tangida = (s, x, forca) => { rotulo.textContent = `${s.nota} (${s.nome})`; rotulo.style.left = x + 'px'; rotulo.style.top = s.y + 'px'; rotulo.classList.add('ve'); clearTimeout(rotulo.t); rotulo.t = setTimeout(() => rotulo.classList.remove('ve'), 900); s.px = Math.min(.92, Math.max(.08, x / W)); s.amp = Math.min(26, 6 + forca * 22); s.fase = 0; animar(); };
     let ultY = null, ultX = 0, ultT = 0;
     cordasEl.addEventListener('pointermove', e => {
       const r = cordasEl.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, t = performance.now();
@@ -186,23 +187,28 @@
     cordasEl.addEventListener('click', e => {
       const r = cordasEl.getBoundingClientRect(), y = e.clientY - r.top;
       const s = est.reduce((a, b) => Math.abs(b.y - y) < Math.abs(a.y - y) ? b : a); tangida(s, e.clientX - r.left, 0.9);
-      aviso.classList.add('some'); audio();
-      if (gravadas[s.midi]) tocarCorda('corda-' + s.nome, s.midi, 0.85);
-      else Promise.race([carregarAmostras(), new Promise(r => setTimeout(r, 600))]).then(() => tocarCorda('corda-' + s.nome, s.midi, 0.85));
+      aviso.classList.add('some');
+      const ac = audio(), ligado = ac.state === 'running' ? null : ac.resume().catch(() => {});   // no celular o áudio começa suspenso
+      if (gravadas[s.midi] && !ligado) tocarCorda('corda-' + s.nome, s.midi, 0.85);
+      else Promise.race([Promise.all([carregarAmostras(), ligado]), new Promise(r => setTimeout(r, 600))]).then(() => tocarCorda('corda-' + s.nome, s.midi, 0.85));
     });
-    // desenho: a corda se curva a partir do ponto onde foi tocada e oscila até parar
-    let t0 = performance.now();
-    (function quadro(t) {
+    // desenho: a corda se curva a partir do ponto onde foi tocada e oscila até parar.
+    // O laço só roda enquanto alguma corda vibra (parado, não gasta o processador do celular).
+    let t0 = performance.now(), ligado = false;
+    function animar() { if (!ligado) { ligado = true; t0 = performance.now(); requestAnimationFrame(quadro); } }
+    function quadro(t) {
       const dt = Math.min(48, t - t0) / 1000; t0 = t;
       est.forEach((s, i) => {
         s.fase += dt * (26 + i * -3); s.amp *= Math.pow(0.12, dt);
         const a = s.amp * Math.cos(s.fase * 2 * Math.PI / 3), x0 = 40, x1 = W - 10, px = x0 + (x1 - x0) * s.px;
         s.el.setAttribute('d', s.amp < 0.15 ? `M${x0},${s.y} L${x1},${s.y}` : `M${x0},${s.y} Q${(x0 + px) / 2},${s.y + a * .9} ${px},${s.y + a} Q${(px + x1) / 2},${s.y + a * .9} ${x1},${s.y}`);
       });
-      requestAnimationFrame(quadro);
-    })(t0);
+      if (est.some(s => s.amp >= 0.15)) requestAnimationFrame(quadro);
+      else { est.forEach(s => s.el.setAttribute('d', `M40,${s.y} L${W - 10},${s.y}`)); ligado = false; }
+    }
+    quadro(t0);
     // um "acorde" de boas-vindas, sem som, quando a página abre
-    if (!reduz) setTimeout(() => est.forEach((s, i) => setTimeout(() => { s.px = .3 + i * .12; s.amp = 14; s.fase = 0; }, i * 110)), 900);
+    if (!reduz) setTimeout(() => est.forEach((s, i) => setTimeout(() => { s.px = .3 + i * .12; s.amp = 14; s.fase = 0; animar(); }, i * 110)), 900);
   }
 
   /* ---------- Braço interativo: pentatônica de Lá menor, casas 0 a 12 ---------- */
@@ -245,21 +251,30 @@
     let rodando = false, comSomAtual = false, timers = [];
     const passo = document.querySelector('.passo-braco');
     const NOMES = { 9: 'Lá', 0: 'Dó', 2: 'Ré', 4: 'Mi', 7: 'Sol' };
-    const parar = () => { timers.forEach(clearTimeout); timers = []; notas.forEach(n => n.g.classList.remove('acesa')); rodando = false; };
+    let agendadas = [];
+    const parar = () => { agendadas.forEach(v => { try { v.src.stop(); } catch (e) {} }); agendadas = []; timers.forEach(clearTimeout); timers = []; notas.forEach(n => n.g.classList.remove('acesa')); rodando = false; };
     // o botão (com som) sempre funciona: interrompe a demonstração muda e toca mesmo com "reduzir movimento"
     const demo = comSom => {
       if (rodando && (comSomAtual || !comSom)) return;
       if (!comSom && reduz) return;
       parar(); rodando = true; comSomAtual = comSom;
+      const PASSO = comSom ? 0.3 : 0.22;
+      let atrasoLuz = 0;
+      if (comSom) {   // todas as notas agendadas de uma vez no relógio de áudio: o ritmo não depende do celular estar livre
+        const ac = audio(), base = ac.currentTime + 0.12;
+        agendadas = seq.map((n, k) => tocar(n.midi, .7, k === seq.length - 1 ? 2.2 : 0.34, base + k * PASSO));
+        atrasoLuz = 120 + ((ac.outputLatency || 0) + (ac.baseLatency || 0)) * 1000;   // a luz acende quando o som chega (fone Bluetooth atrasa)
+      }
       seq.forEach((n, k) => timers.push(setTimeout(() => {
-        n.g.classList.add('acesa'); if (comSom) tocar(n.midi, .7, k === seq.length - 1 ? 2.2 : 0.34); setTimeout(() => n.g.classList.remove('acesa'), 380);
+        n.g.classList.add('acesa'); setTimeout(() => n.g.classList.remove('acesa'), 380);
         if (passo) passo.textContent = `${k + 1} de ${seq.length} · ${NOMES[n.midi % 12]}`;
         if (k === seq.length - 1) { rodando = false; timers.push(setTimeout(() => { if (passo && !rodando) passo.textContent = comSom ? 'Agora tente no seu baixo: casas 5 a 8, começando no Lá.' : ''; }, 600)); }
-      }, k * (comSom ? 300 : 220)))); };
+      }, atrasoLuz + k * PASSO * 1000))); };
     // ao aparecer: só a luz, sem som (o som fica para quem pede)
     new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { demo(false); o.disconnect(); } }), { threshold: .6 }).observe(braco);
     $$('.tocar-desenho').forEach(bt => bt.addEventListener('click', () => {
-      audio(); Promise.race([carregarAmostras(), new Promise(r => setTimeout(r, 800))]).then(() => demo(true));
+      const ac = audio(), ligado = ac.state === 'running' ? null : ac.resume().catch(() => {});
+      Promise.race([Promise.all([carregarAmostras(), ligado]), new Promise(r => setTimeout(r, 800))]).then(() => demo(true));
       // no celular o braço rola de lado: centraliza o Desenho 1 ao tocar
       const caixa = braco.closest('.braco'); if (caixa && caixa.scrollWidth > caixa.clientWidth) caixa.scrollTo({ left: (caixa.scrollWidth - caixa.clientWidth) * 0.45, behavior: 'smooth' });
     }));
