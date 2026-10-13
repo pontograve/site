@@ -148,6 +148,8 @@ body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-i
 .folhas img { position: absolute; width: 58%; border-radius: 6px; box-shadow: 0 40px 70px -20px rgba(0, 0, 0, .8); animation: flutuar 7s ease-in-out infinite; }
 .folhas img:first-child { left: 4%; top: 6%; --r: -7deg; }
 .folhas img:last-child { right: 2%; top: 14%; --r: 6deg; animation-delay: -3.5s; }
+.folhas img:nth-child(2):not(:last-child) { left: 22%; top: 0; --r: -1deg; animation-delay: -1.7s; z-index: 1; }   /* 3 folhas: a do meio fica atrás */
+.folhas img:nth-child(3) { z-index: 2; }
 @keyframes flutuar { 0%, 100% { transform: translateY(0) rotate(var(--r)); } 50% { transform: translateY(-16px) rotate(calc(var(--r) * .6)); } }
 
 /* ---------- Blog ---------- */
