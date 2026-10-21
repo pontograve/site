@@ -14,7 +14,7 @@
 <link rel="icon" href="/assets/icones/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/icones/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono&display=swap">
-<link rel="stylesheet" href="/assets/css/site.css?v=ca965af9">
+<link rel="stylesheet" href="/assets/css/site.css?v=b26b927d">
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -25,6 +25,11 @@ fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1092942483635491&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel Code -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DQKNDTQTC2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+var pgC=null;try{pgC=localStorage.getItem('pg-cookies')}catch(e){}
+gtag('consent','default',{analytics_storage:pgC==='sim'?'granted':'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+gtag('js',new Date());gtag('config','G-DQKNDTQTC2');</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"James Jamerson, o baixo que você já ouviu sem saber o nome","description":"Ele quase nunca aparecia nas capas, mas gravou dezenas de sucessos da Motown. Como as linhas dele cantam junto com a voz, e o que todo baixista pode aprender com elas.","datePublished":"2026-10-19","image":"https://pontograve.com.br/assets/img/blog-jamerson.jpg?v=020bea59","author":{"@type":"Organization","name":"Ponto Grave"},"publisher":{"@type":"Organization","name":"Ponto Grave"}}</script>
 </head>
 <body class="tema-claro">
@@ -47,7 +52,7 @@ fbq('track', 'PageView');
 <p>Os músicos que gravavam os sucessos da Motown quase nunca apareciam nos créditos. O álbum <strong>What&#39;s Going On</strong>, de Marvin Gaye (1971), ficou conhecido justamente por creditar os músicos no disco.</p>
 <h2>Um dedo só</h2>
 <p>Jamerson tocava com o <strong>indicador da mão direita</strong>, num Precision Bass com cordas lisas (flatwound). O resultado é um som redondo e cheio, que virou referência do soul.</p>
-<h2>Linhas que cantam</h2>
+<aside class="convite-mapa"><strong>Grátis: Mapa das cinco notas</strong><span>Os 5 desenhos da pentatônica no braço inteiro, em PDF para imprimir.</span><a class="btn btn-ouro" href="https://lista.pontograve.com.br/brinde">Quero o mapa <span class="seta">→</span></a></aside><h2>Linhas que cantam</h2>
 <p>O que torna as linhas de Jamerson especiais é que elas <strong>cantam junto com a voz</strong>. Ele usava:</p>
 <ul>
 <li>as <strong>notas do acorde</strong> como base;</li>
@@ -83,6 +88,11 @@ fbq('track', 'PageView');
   </div>
   <div class="base"><span>© 2026 Ponto Grave. Todos os direitos reservados. Som de baixo do braço interativo: FluidR3 GM (Frank Wen), licença <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</span><span>pontograve.com.br</span></div>
 </div></footer>
-<script src="/assets/js/site.js?v=ca965af9" defer></script>
+<div class="aviso-cookies" id="aviso-cookies" hidden role="dialog" aria-label="Aviso de cookies"><p>Usamos cookies para medir as visitas e melhorar o site. <a href="/privacidade/">Saiba mais</a></p>
+<div><button type="button" class="btn btn-linha" data-cookies="nao">Recusar</button><button type="button" class="btn btn-ouro" data-cookies="sim">Aceitar</button></div></div>
+<script>(function(){var a=document.getElementById('aviso-cookies'),v=null;try{v=localStorage.getItem('pg-cookies')}catch(e){}
+if(!v)a.hidden=false;a.addEventListener('click',function(e){var b=e.target.closest('[data-cookies]');if(!b)return;var r=b.dataset.cookies;
+try{localStorage.setItem('pg-cookies',r)}catch(e){}if(r==='sim')gtag('consent','update',{analytics_storage:'granted'});a.hidden=true;});})()</script>
+<script src="/assets/js/site.js?v=b26b927d" defer></script>
 </body>
 </html>

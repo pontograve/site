@@ -14,7 +14,7 @@
 <link rel="icon" href="/assets/icones/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/icones/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono&display=swap">
-<link rel="stylesheet" href="/assets/css/site.css?v=ca965af9">
+<link rel="stylesheet" href="/assets/css/site.css?v=b26b927d">
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -25,6 +25,11 @@ fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1092942483635491&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel Code -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DQKNDTQTC2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+var pgC=null;try{pgC=localStorage.getItem('pg-cookies')}catch(e){}
+gtag('consent','default',{analytics_storage:pgC==='sim'?'granted':'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+gtag('js',new Date());gtag('config','G-DQKNDTQTC2');</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Precision ou Jazz Bass? As diferenças que você ouve e sente","description":"Os dois baixos mais copiados da história. Captadores, braço, controles e som: o que muda de um para o outro e qual combina com o seu estilo.","datePublished":"2026-10-12","image":"https://pontograve.com.br/assets/img/blog-precision-jazz.jpg?v=a04373c2","author":{"@type":"Organization","name":"Ponto Grave"},"publisher":{"@type":"Organization","name":"Ponto Grave"}}</script>
 </head>
 <body class="tema-claro">
@@ -81,7 +86,7 @@ fbq('track', 'PageView');
 <h2>Como soa cada um</h2>
 <p>O <strong>Precision</strong> tem um som <strong>grosso e firme</strong>, que ocupa o espaço do grave sem esforço. É o baixo de muitas gravações de soul, rock e música pop: ele &quot;cola&quot; na bateria.</p>
 <p>O <strong>Jazz Bass</strong>, com dois captadores, permite <strong>misturar timbres</strong>. Com os dois no máximo, o som fica mais aberto; só o captador da ponte deixa o som mais estreito e com ataque, muito usado em funk e em solos.</p>
-<h2>O braço faz diferença</h2>
+<aside class="convite-mapa"><strong>Grátis: Mapa das cinco notas</strong><span>Os 5 desenhos da pentatônica no braço inteiro, em PDF para imprimir.</span><a class="btn btn-ouro" href="https://lista.pontograve.com.br/brinde">Quero o mapa <span class="seta">→</span></a></aside><h2>O braço faz diferença</h2>
 <p>O braço mais <strong>fino</strong> do Jazz Bass é mais confortável para mãos pequenas e para passagens rápidas. O do Precision, mais <strong>largo</strong>, agrada a quem gosta de &quot;pegada&quot; e de tocar com força.</p>
 <h2>Qual escolher?</h2>
 <p>Não existe resposta certa. Se puder, <strong>toque os dois</strong> com o mesmo groove e ouça. E se você ainda não tem nenhum: comece com o que tiver à mão. Tudo o que você aprende num baixo vale no outro.</p>
@@ -106,6 +111,11 @@ fbq('track', 'PageView');
   </div>
   <div class="base"><span>© 2026 Ponto Grave. Todos os direitos reservados. Som de baixo do braço interativo: FluidR3 GM (Frank Wen), licença <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</span><span>pontograve.com.br</span></div>
 </div></footer>
-<script src="/assets/js/site.js?v=ca965af9" defer></script>
+<div class="aviso-cookies" id="aviso-cookies" hidden role="dialog" aria-label="Aviso de cookies"><p>Usamos cookies para medir as visitas e melhorar o site. <a href="/privacidade/">Saiba mais</a></p>
+<div><button type="button" class="btn btn-linha" data-cookies="nao">Recusar</button><button type="button" class="btn btn-ouro" data-cookies="sim">Aceitar</button></div></div>
+<script>(function(){var a=document.getElementById('aviso-cookies'),v=null;try{v=localStorage.getItem('pg-cookies')}catch(e){}
+if(!v)a.hidden=false;a.addEventListener('click',function(e){var b=e.target.closest('[data-cookies]');if(!b)return;var r=b.dataset.cookies;
+try{localStorage.setItem('pg-cookies',r)}catch(e){}if(r==='sim')gtag('consent','update',{analytics_storage:'granted'});a.hidden=true;});})()</script>
+<script src="/assets/js/site.js?v=b26b927d" defer></script>
 </body>
 </html>

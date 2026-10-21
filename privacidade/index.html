@@ -14,7 +14,7 @@
 <link rel="icon" href="/assets/icones/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/icones/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono&display=swap">
-<link rel="stylesheet" href="/assets/css/site.css?v=ca965af9">
+<link rel="stylesheet" href="/assets/css/site.css?v=b26b927d">
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -25,6 +25,11 @@ fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1092942483635491&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel Code -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DQKNDTQTC2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+var pgC=null;try{pgC=localStorage.getItem('pg-cookies')}catch(e){}
+gtag('consent','default',{analytics_storage:pgC==='sim'?'granted':'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+gtag('js',new Date());gtag('config','G-DQKNDTQTC2');</script>
 
 </head>
 <body class="tema-claro">
@@ -47,7 +52,7 @@ fbq('track', 'PageView');
   <ul>
     <li><b>Dados que você informa:</b> nome e e-mail, quando você pede o material gratuito ou entra na lista de espera dos livros.</li>
     <li><b>Dados de compra:</b> quando você compra um livro, o pagamento é feito na <b>Hotmart</b>, que coleta os dados necessários à compra (como nome, e-mail, CPF e dados de pagamento) segundo a política de privacidade dela. Nós recebemos da Hotmart apenas o necessário para entregar o produto e prestar suporte.</li>
-    <li><b>Dados de navegação:</b> informações técnicas como páginas visitadas, tipo de aparelho e navegador, coletadas por cookies e ferramentas de medição, como o Pixel da Meta e o Google.</li>
+    <li><b>Dados de navegação:</b> informações técnicas como páginas visitadas, tipo de aparelho e navegador, coletadas por cookies e ferramentas de medição, como o Pixel da Meta e o Google Analytics.</li>
   </ul>
   <h2>Para que usamos</h2>
   <ul>
@@ -63,12 +68,13 @@ fbq('track', 'PageView');
   <ul>
     <li><b>systeme.io:</b> hospedagem do site, formulários e envio de e-mails.</li>
     <li><b>Hotmart:</b> pagamento, entrega dos livros e área do comprador.</li>
-    <li><b>Meta (Facebook e Instagram) e Google:</b> medição e anúncios.</li>
+    <li><b>Meta (Facebook e Instagram):</b> medição e anúncios.</li>
+    <li><b>Google (Google Analytics):</b> medição de visitas, de forma agregada.</li>
     <li><b>GitHub:</b> hospedagem de imagens, do app afinador e da página de bônus.</li>
   </ul>
   Alguns desses serviços podem armazenar dados fora do Brasil, com as garantias previstas na LGPD.
   <h2>Cookies</h2>
-  <p>Cookies são pequenos arquivos guardados no seu navegador. Usamos cookies necessários ao funcionamento do site e cookies de medição e publicidade. Você pode apagá-los ou bloqueá-los nas configurações do seu navegador; o site continua funcionando, mas alguns recursos de medição deixam de funcionar.</p>
+  <p>Cookies são pequenos arquivos guardados no seu navegador. Usamos cookies necessários ao funcionamento do site e cookies de medição e publicidade. Os cookies do Google Analytics só são gravados se você clicar em “Aceitar” no aviso de cookies; para mudar a escolha, apague os dados do site no navegador e o aviso aparece de novo. Você pode apagá-los ou bloqueá-los nas configurações do seu navegador; o site continua funcionando, mas alguns recursos de medição deixam de funcionar.</p>
   <h2>Por quanto tempo guardamos</h2>
   <p>Guardamos seu nome e e-mail enquanto você estiver inscrito na nossa lista. Se você cancelar a inscrição, deixamos de enviar e-mails e excluímos ou anonimizamos seus dados, exceto o que precisarmos manter por obrigação legal (por exemplo, registros de compra).</p>
   <h2>Seus direitos</h2>
@@ -90,6 +96,11 @@ fbq('track', 'PageView');
   </div>
   <div class="base"><span>© 2026 Ponto Grave. Todos os direitos reservados. Som de baixo do braço interativo: FluidR3 GM (Frank Wen), licença <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</span><span>pontograve.com.br</span></div>
 </div></footer>
-<script src="/assets/js/site.js?v=ca965af9" defer></script>
+<div class="aviso-cookies" id="aviso-cookies" hidden role="dialog" aria-label="Aviso de cookies"><p>Usamos cookies para medir as visitas e melhorar o site. <a href="/privacidade/">Saiba mais</a></p>
+<div><button type="button" class="btn btn-linha" data-cookies="nao">Recusar</button><button type="button" class="btn btn-ouro" data-cookies="sim">Aceitar</button></div></div>
+<script>(function(){var a=document.getElementById('aviso-cookies'),v=null;try{v=localStorage.getItem('pg-cookies')}catch(e){}
+if(!v)a.hidden=false;a.addEventListener('click',function(e){var b=e.target.closest('[data-cookies]');if(!b)return;var r=b.dataset.cookies;
+try{localStorage.setItem('pg-cookies',r)}catch(e){}if(r==='sim')gtag('consent','update',{analytics_storage:'granted'});a.hidden=true;});})()</script>
+<script src="/assets/js/site.js?v=b26b927d" defer></script>
 </body>
 </html>

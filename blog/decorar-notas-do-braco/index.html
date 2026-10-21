@@ -14,7 +14,7 @@
 <link rel="icon" href="/assets/icones/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/assets/icones/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono&display=swap">
-<link rel="stylesheet" href="/assets/css/site.css?v=ca965af9">
+<link rel="stylesheet" href="/assets/css/site.css?v=b26b927d">
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -25,6 +25,11 @@ fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1092942483635491&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel Code -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DQKNDTQTC2"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+var pgC=null;try{pgC=localStorage.getItem('pg-cookies')}catch(e){}
+gtag('consent','default',{analytics_storage:pgC==='sim'?'granted':'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+gtag('js',new Date());gtag('config','G-DQKNDTQTC2');</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Como decorar as notas do braço do baixo (sem decoreba)","description":"Você não precisa decorar 80 notas. Com as cordas Mi e Lá, as marcações do braço e o desenho da oitava, você encontra qualquer nota em segundos. Com exercício de 5 minutos por dia.","datePublished":"2026-10-13","image":"https://pontograve.com.br/assets/img/blog-notas-braco.jpg?v=75a3c2a8","author":{"@type":"Organization","name":"Ponto Grave"},"publisher":{"@type":"Organization","name":"Ponto Grave"}}</script>
 </head>
 <body class="tema-claro">
@@ -88,7 +93,7 @@ fbq('track', 'PageView');
 </tr>
 </tbody></table>
 <p>Repare: na <strong>casa 5</strong>, cada corda tem a nota da corda <strong>solta de baixo</strong>. É o mesmo truque usado para afinar.</p>
-<h2>Atalho 2: as bolinhas do braço</h2>
+<aside class="convite-mapa"><strong>Grátis: Mapa das cinco notas</strong><span>Os 5 desenhos da pentatônica no braço inteiro, em PDF para imprimir.</span><a class="btn btn-ouro" href="https://lista.pontograve.com.br/brinde">Quero o mapa <span class="seta">→</span></a></aside><h2>Atalho 2: as bolinhas do braço</h2>
 <p>As marcações nas <strong>casas 3, 5, 7, 9 e 12</strong> são pontos de referência. Na corda Mi: <strong>3 = Sol, 5 = Lá, 7 = Si, 12 = Mi</strong> de novo. Use as bolinhas como &quot;endereço&quot; e conte a partir delas.</p>
 <h2>Atalho 3: o desenho da oitava</h2>
 <p>Achou uma nota na corda Mi ou Lá? A <strong>mesma nota, uma oitava acima</strong>, fica <strong>2 cordas acima e 2 casas à frente</strong>:</p>
@@ -128,6 +133,11 @@ E|-5-------|  ← Lá
   </div>
   <div class="base"><span>© 2026 Ponto Grave. Todos os direitos reservados. Som de baixo do braço interativo: FluidR3 GM (Frank Wen), licença <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</span><span>pontograve.com.br</span></div>
 </div></footer>
-<script src="/assets/js/site.js?v=ca965af9" defer></script>
+<div class="aviso-cookies" id="aviso-cookies" hidden role="dialog" aria-label="Aviso de cookies"><p>Usamos cookies para medir as visitas e melhorar o site. <a href="/privacidade/">Saiba mais</a></p>
+<div><button type="button" class="btn btn-linha" data-cookies="nao">Recusar</button><button type="button" class="btn btn-ouro" data-cookies="sim">Aceitar</button></div></div>
+<script>(function(){var a=document.getElementById('aviso-cookies'),v=null;try{v=localStorage.getItem('pg-cookies')}catch(e){}
+if(!v)a.hidden=false;a.addEventListener('click',function(e){var b=e.target.closest('[data-cookies]');if(!b)return;var r=b.dataset.cookies;
+try{localStorage.setItem('pg-cookies',r)}catch(e){}if(r==='sim')gtag('consent','update',{analytics_storage:'granted'});a.hidden=true;});})()</script>
+<script src="/assets/js/site.js?v=b26b927d" defer></script>
 </body>
 </html>
