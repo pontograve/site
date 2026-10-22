@@ -282,6 +282,25 @@
     $$('.tocar-desenho').forEach(bt => obsDes.observe(bt));
   }
 
+  /* ---------- Página do livro: antes × depois (mesmo groove em Lá, 2 compassos de colcheias) ---------- */
+  {
+    const LINHAS = {   // midi por colcheia; 0 = pausa
+      antes:  [33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33],
+      depois: [33, 0, 33, 36, 38, 0, 40, 43, 45, 0, 43, 40, 38, 36, 33, 0]
+    };
+    let fila = [];
+    $$('.tocar-linha').forEach(bt => bt.addEventListener('click', () => {
+      const ac = audio(), ligado = ac.state === 'running' ? null : ac.resume().catch(() => {});
+      fila.forEach(v => { try { v.src.stop(); } catch (e) {} }); fila = [];
+      $$('.tocar-linha').forEach(b => b.classList.remove('tocando')); bt.classList.add('tocando');
+      Promise.race([Promise.all([carregarAmostras(), ligado]), new Promise(r => setTimeout(r, 800))]).then(() => {
+        const base = audio().currentTime + 0.1, P = 0.26;
+        LINHAS[bt.dataset.linha].forEach((m, k) => { if (m) fila.push(tocar(m, k % 4 === 0 ? .9 : .7, P * 0.9, base + k * P)); });
+        setTimeout(() => bt.classList.remove('tocando'), 16 * P * 1000 + 400);
+      });
+    }));
+  }
+
   /* ---------- Conteúdo por data: data-ate (some na data) e data-desde (aparece na data) ---------- */
   const agora = Date.now();
   $$('[data-ate]').forEach(el => { if (agora >= new Date(el.dataset.ate).getTime()) el.hidden = true; });

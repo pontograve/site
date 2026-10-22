@@ -420,3 +420,31 @@ body .prosa .convite-mapa strong { display: block; font: 700 19px var(--t-texto)
 body .prosa .convite-mapa .btn { grid-column: 2; grid-row: 1 / span 2; text-decoration: none; color: var(--preto); border: 0; }
 @media (max-width: 560px) { .prosa .convite-mapa { grid-template-columns: 1fr; } .prosa .convite-mapa .btn { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 8px; } }
 body .prosa .convite-mapa .btn .seta { color: inherit; }
+
+/* Livro: folhear as páginas */
+.folhear { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.folhear figure { margin: 0; }
+.folhear img { display: block; width: 100%; height: auto; border-radius: 6px; box-shadow: 0 24px 50px rgba(0, 0, 0, .45); transition: transform .35s cubic-bezier(.2, .8, .2, 1); }
+.folhear figure:hover img { transform: translateY(-6px) rotate(-1deg); }
+.folhear figcaption { margin-top: 14px; font: 600 14px var(--t-texto); color: var(--cinza); }
+@media (max-width: 860px) { .folhear { grid-template-columns: repeat(2, 1fr); } .lista-check[style*="columns"] { columns: 1 !important; } }
+/* Livro: tudo o que você leva */
+.leva { padding: 34px; border-radius: 24px; background: #1A1714; border: 1px solid rgba(226, 180, 94, .35); }
+.leva ul { list-style: none; margin: 18px 0 0; padding: 0; }
+.leva li { display: flex; justify-content: space-between; gap: 16px; padding: 13px 0; border-bottom: 1px dashed rgba(242, 236, 226, .15); }
+.leva li span { font-weight: 600; } .leva li span::before { content: "✓"; color: var(--ouro); margin-right: 10px; }
+.leva li b { color: var(--cinza); font-weight: 500; text-align: right; }
+.leva-preco { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; margin-top: 26px; }
+.leva-preco s { color: var(--cinza); font-size: 18px; margin-right: 10px; }
+.leva-preco b { font: 400 64px/1 var(--t-titulo, 'Archivo Black'); color: var(--ouro); } .leva-preco b small { font-size: .38em; vertical-align: .9em; margin-right: 4px; }
+.leva-preco > div > span { display: block; color: var(--cinza); font-size: 14px; margin-top: 6px; }
+
+/* conteúdo por data (data-ate / data-desde): o hidden vence o display dos botões */
+[hidden] { display: none !important; }
+
+/* página do livro: texto de apoio mais legível no fundo escuro */
+.tema-escuro .sub, .tema-escuro .livro-hero p, .tema-escuro .legenda-braco { color: #D4CCBF; }
+.autor { display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: center; max-width: 900px; }
+.autor img { width: 240px; height: 240px; border-radius: 50%; object-fit: cover; border: 3px solid var(--ouro); }
+@media (max-width: 700px) { .autor { grid-template-columns: 1fr; text-align: center; } .autor img { margin: 0 auto; width: 180px; height: 180px; } }
+.tocar-linha.tocando { box-shadow: 0 0 0 3px var(--ouro); }
