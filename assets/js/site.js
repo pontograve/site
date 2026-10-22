@@ -163,7 +163,8 @@
     const svg = $('svg', cordasEl), NS = 'http://www.w3.org/2000/svg';
     const CORDAS = [{ nome: 'G', nota: 'Sol', midi: 43, esp: 1.6 }, { nome: 'D', nota: 'Ré', midi: 38, esp: 2.2 }, { nome: 'A', nota: 'Lá', midi: 33, esp: 2.9 }, { nome: 'E', nota: 'Mi', midi: 28, esp: 3.6 }];
     const rotulo = document.createElement('div'); rotulo.className = 'nome-corda'; cordasEl.append(rotulo);
-    const aviso = document.createElement('div'); aviso.className = 'aviso-corda'; aviso.textContent = toque ? 'Toque uma corda para ouvir 👇' : 'Clique numa corda para ouvir 👇'; cordasEl.parentElement.append(aviso);
+    const aviso = document.createElement('div'); aviso.className = 'aviso-corda'; aviso.textContent = '↓ Toque nas cordas para ouvir'; cordasEl.parentElement.append(aviso);
+    { const w = cordasEl.parentElement.querySelector('.wrap'); if (w && document.body.classList.contains('tema-claro')) { aviso.classList.add('alinhado'); const pos = () => { aviso.style.left = (w.getBoundingClientRect().left + parseFloat(getComputedStyle(w).paddingLeft || 0)) + 'px'; }; pos(); addEventListener('resize', pos); } }
     cordasEl.addEventListener('pointerenter', () => carregarAmostras(), { once: true });
     // no celular não há "passar o mouse": carrega as gravações assim que as cordas aparecem na tela
     const obsSom = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { carregarAmostras(); obsSom.disconnect(); } });
@@ -207,6 +208,15 @@
       else { est.forEach(s => s.el.setAttribute('d', `M40,${s.y} L${W - 10},${s.y}`)); ligado = false; }
     }
     quadro(t0);
+    // ao rolar a página, as cordas vibram de leve (sem som), mais forte quanto mais rápido se rola
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      let yAnt = scrollY, tAnt = performance.now(), vez = 0;
+      addEventListener('scroll', () => {
+        const t = performance.now(), v = Math.abs(scrollY - yAnt) / Math.max(16, t - tAnt); yAnt = scrollY; tAnt = t;
+        const r = cordasEl.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight || v < 0.15) return;
+        const s = est[vez++ % est.length]; if (s.amp < 3) { s.px = 0.3 + Math.random() * 0.4; s.amp = Math.min(14, 3 + v * 6); s.fase = 0; animar(); }
+      }, { passive: true });
+    }
     // um "acorde" de boas-vindas, sem som, quando a página abre
     if (!reduz) setTimeout(() => est.forEach((s, i) => setTimeout(() => { s.px = .3 + i * .12; s.amp = 14; s.fase = 0; animar(); }, i * 110)), 900);
   }
@@ -214,12 +224,15 @@
   /* ---------- Braço interativo: pentatônica de Lá menor, casas 0 a 12 ---------- */
   const braco = $('.braco svg');
   if (braco) {
-    const NS = 'http://www.w3.org/2000/svg', CASAS = 12, Wb = 1000, Hb = 230, x0 = 46, larg = (Wb - x0 - 14) / CASAS;
+    // no topo da home (moldura em pé) o braço fica na vertical: casa 0 em cima, Mi à esquerda e Sol à direita
+    const caixaV = braco.closest('.braco-vertical');
+    const vertical = !!caixaV && caixaV.clientHeight > caixaV.clientWidth;
+    const NS = 'http://www.w3.org/2000/svg', CASAS = vertical ? 9 : 12, Wb = 1000, Hb = vertical ? 420 : 230, x0 = 46, larg = (Wb - x0 - 14) / CASAS;
     const CORDAS = [{ n: 'G', midi: 43 }, { n: 'D', midi: 38 }, { n: 'A', midi: 33 }, { n: 'E', midi: 28 }];
     const PENTA = { 9: 'Lá', 0: 'Dó', 2: 'Ré', 4: 'Mi', 7: 'Sol' };   // classe de altura → nome
     const yC = i => 30 + i * ((Hb - 60) / 3), xC = f => f === 0 ? x0 - 22 : x0 + (f - .5) * larg;
     const el = (tag, at) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); return e; };
-    braco.setAttribute('viewBox', `0 0 ${Wb} ${Hb}`);
+    braco.setAttribute('viewBox', vertical ? `0 0 ${Hb} ${Wb}` : `0 0 ${Wb} ${Hb}`);
     for (let f = 0; f <= CASAS; f++) braco.append(el('line', { x1: x0 + f * larg, y1: 18, x2: x0 + f * larg, y2: Hb - 18, stroke: f === 0 ? '#EFE6D6' : '#8D7A62', 'stroke-width': f === 0 ? 7 : 2 }));
     [3, 5, 7, 9].forEach(f => braco.append(el('circle', { cx: xC(f), cy: Hb / 2, r: 7, fill: '#5C4A37' })));
     [Hb / 2 - 34, Hb / 2 + 34].forEach(cy => braco.append(el('circle', { cx: xC(12), cy, r: 7, fill: '#5C4A37' })));
@@ -238,6 +251,13 @@
       g.addEventListener('pointerenter', acender); g.addEventListener('click', acender);
       braco.append(g);
     } });
+    if (vertical) {   // gira o desenho 90° e devolve os textos à posição de leitura
+      const g = el('g', { transform: `translate(${Hb},0) rotate(90)` });
+      [...braco.childNodes].forEach(n => g.append(n));
+      braco.append(g);
+      g.querySelectorAll('text').forEach(t => { const x = t.getAttribute('x'), y = +t.getAttribute('y') - (t.closest('.nota') ? 4.5 : 0); t.setAttribute('transform', `rotate(-90 ${x} ${y})`); if (t.closest('.nota')) { t.setAttribute('y', y); t.setAttribute('dominant-baseline', 'central'); } });
+      g.querySelectorAll('.regiao-rot').forEach(t => t.remove());
+    }
     // celular: o braço rola de lado; começa mostrando o Desenho 1 e avisa que dá para arrastar
     const caixaB = braco.closest('.braco');
     if (caixaB && caixaB.scrollWidth > caixaB.clientWidth + 4) {
@@ -310,6 +330,44 @@
     const jan = window.open(a.href, 'afinador-ponto-grave', `popup=yes,width=${w},height=${h},left=${x},top=${y}`);
     if (jan) { e.preventDefault(); jan.focus(); }
   }));
+
+  /* faixa do lançamento: "faltam N dias" */
+  $$('[data-faltam]').forEach(el => { const d = Math.ceil((new Date(el.dataset.faltam) - Date.now()) / 864e5); el.textContent = d > 1 ? `faltam ${d} dias` : d === 1 ? 'é amanhã' : 'é hoje'; });
+
+  /* ---------- Mini-teste: 3 perguntas → artigo certo + Mapa grátis ---------- */
+  const quiz = $('.quiz');
+  if (quiz) {
+    const corpo = $('.quiz-corpo', quiz), brinde = quiz.dataset.brinde;
+    const PERG = [
+      ['Quando a banda toca, você…', [['Fico na tônica, com medo de errar', 'tonica'], ['Arrisco umas notas, mas sem saber por quê', 'escala'], ['Improviso, mas soa sempre igual', 'improviso']]],
+      ['A pentatônica para você é…', [['Nunca estudei', 'tonica'], ['Sei um desenho, a "caixinha"', 'escala'], ['Sei os 5 desenhos', 'improviso']]],
+      ['Onde você mais toca?', [['Na igreja', 'louvor'], ['Na banda ou com amigos', 'banda'], ['Sozinho, estudando', 'estudo']]]
+    ];
+    const RES = {
+      tonica: ['Sair da tônica sem perder o tempo', 'Você está no ponto certo para dar o primeiro passo: tônica no tempo 1 e mais uma nota da pentatônica.', '/blog/so-toco-a-tonica/'],
+      escala: ['Ligar o desenho à música', 'Você já tem a escala na mão. Falta usar no acorde certo, na hora certa.', '/blog/qual-escala-usar-na-musica/'],
+      improviso: ['Sair da caixinha', 'Você já improvisa. O próximo passo é ligar os 5 desenhos e criar frases com motivo e espaço.', '/blog/pentatonica-no-baixo-guia/'],
+      louvor: ['Linhas que sustentam o louvor', 'Na igreja, o segredo é servir à música: menos notas, no lugar certo.', '/blog/baixo-na-igreja-louvor/']
+    };
+    let resp = [];
+    const mostrar = i => {
+      if (i === PERG.length) {
+        const n = {}; resp.slice(0, 2).forEach(r => n[r] = (n[r] || 0) + 1);
+        const nivel = Object.keys(n).sort((a, b) => n[b] - n[a])[0];
+        const [t, d, url] = RES[resp[2] === 'louvor' && nivel === 'tonica' ? 'louvor' : nivel];
+        corpo.innerHTML = `<div class="quiz-res"><span class="rot">Seu próximo passo</span><h3>${t}</h3><p>${d}</p>
+          <div class="quiz-acoes"><a class="btn btn-ouro" href="${brinde}">Baixar o Mapa grátis →</a><a class="btn btn-linha" href="${url}">Ler o artigo</a></div>
+          <button type="button" class="quiz-refazer">Refazer o teste</button></div>`;
+        $('.quiz-refazer', corpo).onclick = () => { resp = []; mostrar(0); };
+        try { gtag('event', 'quiz_concluido', { resultado: nivel }); } catch (e) {}
+        return;
+      }
+      const [q, ops] = PERG[i];
+      corpo.innerHTML = `<div class="quiz-passo"><span class="quiz-n">${i + 1} de ${PERG.length}</span><h3>${q}</h3><div class="quiz-ops">${ops.map(([t, v]) => `<button type="button" data-v="${v}">${t}</button>`).join('')}</div></div>`;
+      $$('.quiz-ops button', corpo).forEach(b => b.onclick = () => { resp[i] = b.dataset.v; mostrar(i + 1); });
+    };
+    mostrar(0);
+  }
 
   /* ---------- Conteúdo por data: data-ate (some na data) e data-desde (aparece na data) ---------- */
   const agora = Date.now();
