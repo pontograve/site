@@ -301,6 +301,16 @@
     }));
   }
 
+  /* ---------- App afinador: no computador abre numa janela do tamanho de um celular (mini app);
+     no celular (ou se o navegador bloquear a janela) abre em outra aba ---------- */
+  $$('a[href^="https://afinador.pontograve.com.br"]').forEach(a => a.addEventListener('click', e => {
+    if (matchMedia('(max-width: 900px), (pointer: coarse)').matches) return;
+    const w = 420, h = Math.max(640, Math.min(860, (screen.availHeight || 900) - 60));
+    const x = Math.max(0, (screen.availLeft || 0) + screen.availWidth - w - 40), y = (screen.availTop || 0) + 30;
+    const jan = window.open(a.href, 'afinador-ponto-grave', `popup=yes,width=${w},height=${h},left=${x},top=${y}`);
+    if (jan) { e.preventDefault(); jan.focus(); }
+  }));
+
   /* ---------- Conteúdo por data: data-ate (some na data) e data-desde (aparece na data) ---------- */
   const agora = Date.now();
   $$('[data-ate]').forEach(el => { if (agora >= new Date(el.dataset.ate).getTime()) el.hidden = true; });
