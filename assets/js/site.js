@@ -240,7 +240,7 @@
     const rr = el('text', { class: 'regiao-rot', x: x0 + 6 * larg, y: 11, 'text-anchor': 'middle' }); rr.textContent = 'DESENHO 1 · CASAS 5–8'; braco.append(rr);
     CORDAS.forEach((c, i) => braco.append(el('line', { x1: x0 - 30, y1: yC(i), x2: Wb - 10, y2: yC(i), stroke: '#CBB89C', 'stroke-width': 1.4 + i * .7 })));
     for (let f = 1; f <= CASAS; f++) { const t = el('text', { x: xC(f), y: Hb - 2, fill: '#8D7A62', 'font-size': 13, 'text-anchor': 'middle', 'font-family': 'Archivo' }); t.textContent = f; braco.append(t); }
-    const notas = [];
+    const notas = [], passo = document.querySelector('.passo-braco');
     CORDAS.forEach((c, i) => { for (let f = 0; f <= CASAS; f++) {
       const pc = (c.midi + f) % 12; if (!(pc in PENTA)) continue;
       const g = el('g', { class: 'nota' + (pc === 9 ? ' tonica' : '') }), r = 15;
@@ -248,7 +248,14 @@
       const t = el('text', { x: xC(f), y: yC(i) + 4.5 }); t.textContent = PENTA[pc]; g.append(t);
       const nota = { g, midi: c.midi + f, casa: f, corda: i }; notas.push(nota);
       const acender = () => { g.classList.add('acesa'); clearTimeout(nota.t); nota.t = setTimeout(() => g.classList.remove('acesa'), 700); };
-      g.addEventListener('pointerenter', acender); g.addEventListener('click', acender);
+      g.addEventListener('pointerenter', acender);
+      // clicar (ou tocar no celular) na nota faz soar a nota
+      g.addEventListener('click', () => {
+        acender(); const ac = audio(); if (ac.state !== 'running') ac.resume().catch(() => {});
+        carregarAmostras().then(() => tocar(nota.midi, .7, 0.9, ac.currentTime + 0.02));
+        if (passo) passo.textContent = `${PENTA[(c.midi + f) % 12]} · casa ${f}`;
+      });
+      g.style.cursor = 'pointer';
       braco.append(g);
     } });
     if (vertical) {   // gira o desenho 90° e devolve os textos à posição de leitura
@@ -269,7 +276,6 @@
     const desenho = notas.filter(n => n.casa >= 5 && n.casa <= 8).sort((a, b) => a.midi - b.midi);
     const seq = [...desenho, ...desenho.slice(0, -1).reverse()];
     let rodando = false, comSomAtual = false, timers = [];
-    const passo = document.querySelector('.passo-braco');
     const NOMES = { 9: 'Lá', 0: 'Dó', 2: 'Ré', 4: 'Mi', 7: 'Sol' };
     let agendadas = [];
     const parar = () => { agendadas.forEach(v => { try { v.src.stop(); } catch (e) {} }); agendadas = []; timers.forEach(clearTimeout); timers = []; notas.forEach(n => n.g.classList.remove('acesa')); rodando = false; };
