@@ -74,9 +74,12 @@
   };
   // quando: horário no relógio de áudio (agendar a sequência inteira evita atrasos e "engasgos" no celular)
   function tocar(midi, forca = 0.8, dur = 1.6, quando = 0) {
-    const ac = audio(), t0 = Math.max(ac.currentTime, quando), rec = gravadas[midi];
+    const ac = audio(), t0 = Math.max(ac.currentTime, quando);
+    // nota sem gravação própria: usa a gravação mais próxima, afinada para a altura certa (até 5 semitons: cobre o braço todo, casas 0 a 12)
+    const perto = Object.keys(gravadas).map(Number).sort((a, b) => Math.abs(a - midi) - Math.abs(b - midi))[0];
+    const rec = perto !== undefined && Math.abs(perto - midi) <= 5 ? gravadas[perto] : null;
     const src = ac.createBufferSource(), g = ac.createGain();
-    if (rec) { src.buffer = rec; src.connect(g).connect(cadeiaGravada()); }
+    if (rec) { src.buffer = rec; src.playbackRate.value = Math.pow(2, (midi - perto) / 12); src.connect(g).connect(cadeiaGravada()); }
     else { src.buffer = buffer(440 * Math.pow(2, (midi - 69) / 12)); src.connect(g).connect(cadeia()); }
     g.gain.setValueAtTime(0.9 * forca, t0); g.gain.setTargetAtTime(0, t0 + dur, 0.08);   // a mão abafa a nota
     src.start(t0); src.stop(t0 + dur + 0.6);
