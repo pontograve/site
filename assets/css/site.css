@@ -517,3 +517,12 @@ body.tema-claro .aviso-corda.alinhado { transform: none !important; }
 .quiz-passo, .quiz-res { animation: aparecer .5s; }
 .quiz .btn-linha { color: var(--marfim); border-color: rgba(242,236,226,.4); }
 .quiz .btn-linha:hover { border-color: var(--ouro); color: var(--ouro); }
+
+/* atalho fixo no celular: aparece depois de rolar, some com o aviso de cookies aberto e perto do rodapé */
+.cta-fixo { display: none; }
+@media (max-width: 760px) {
+  .cta-fixo { display: block; position: fixed; left: 16px; right: 16px; bottom: 14px; z-index: 40; transform: translateY(140%); transition: transform .3s; }
+  .cta-fixo.ve { transform: none; }
+  .cta-fixo .btn { display: flex; justify-content: center; width: 100%; box-sizing: border-box; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+  .cta-fixo [hidden] { display: none; }
+}

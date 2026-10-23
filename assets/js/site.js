@@ -235,14 +235,14 @@
     const PENTA = { 9: 'Lá', 0: 'Dó', 2: 'Ré', 4: 'Mi', 7: 'Sol' };   // classe de altura → nome
     const yC = i => 30 + i * ((Hb - 60) / 3), xC = f => f === 0 ? x0 - 22 : x0 + (f - .5) * larg;
     const el = (tag, at) => { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); return e; };
-    braco.setAttribute('viewBox', vertical ? `0 0 ${Hb} ${Wb}` : `0 0 ${Wb} ${Hb}`);
+    braco.setAttribute('viewBox', vertical ? `-34 0 ${Hb + 34} ${Wb}` : `0 0 ${Wb} ${Hb}`);   // no vertical, margem à esquerda para os números das casas
     for (let f = 0; f <= CASAS; f++) braco.append(el('line', { x1: x0 + f * larg, y1: 18, x2: x0 + f * larg, y2: Hb - 18, stroke: f === 0 ? '#EFE6D6' : '#8D7A62', 'stroke-width': f === 0 ? 7 : 2 }));
     [3, 5, 7, 9].forEach(f => braco.append(el('circle', { cx: xC(f), cy: Hb / 2, r: 7, fill: '#5C4A37' })));
     [Hb / 2 - 34, Hb / 2 + 34].forEach(cy => braco.append(el('circle', { cx: xC(12), cy, r: 7, fill: '#5C4A37' })));
     braco.append(el('rect', { class: 'regiao', x: x0 + 4 * larg + 3, y: 14, width: 4 * larg - 6, height: Hb - 40, rx: 12 }));
     const rr = el('text', { class: 'regiao-rot', x: x0 + 6 * larg, y: 11, 'text-anchor': 'middle' }); rr.textContent = 'DESENHO 1 · CASAS 5–8'; braco.append(rr);
     CORDAS.forEach((c, i) => braco.append(el('line', { x1: x0 - 30, y1: yC(i), x2: Wb - 10, y2: yC(i), stroke: '#CBB89C', 'stroke-width': 1.4 + i * .7 })));
-    for (let f = 1; f <= CASAS; f++) { const t = el('text', { x: xC(f), y: Hb - 2, fill: '#8D7A62', 'font-size': 13, 'text-anchor': 'middle', 'font-family': 'Archivo' }); t.textContent = f; braco.append(t); }
+    for (let f = 1; f <= CASAS; f++) { const t = el('text', { x: xC(f), y: Hb - 2, fill: '#8D7A62', 'font-size': vertical ? 30 : 13, 'text-anchor': 'middle', 'font-family': 'Archivo', class: 'casa-num' }); t.textContent = f; braco.append(t); }
     const notas = [], passo = document.querySelector('.passo-braco');
     CORDAS.forEach((c, i) => { for (let f = 0; f <= CASAS; f++) {
       const pc = (c.midi + f) % 12; if (!(pc in PENTA)) continue;
@@ -267,6 +267,7 @@
       braco.append(g);
       g.querySelectorAll('text').forEach(t => { const x = t.getAttribute('x'), y = +t.getAttribute('y') - (t.closest('.nota') ? 4.5 : 0); t.setAttribute('transform', `rotate(-90 ${x} ${y})`); if (t.closest('.nota')) { t.setAttribute('y', y); t.setAttribute('dominant-baseline', 'central'); } });
       g.querySelectorAll('.regiao-rot').forEach(t => t.remove());
+      g.querySelectorAll('.casa-num').forEach(t => { const x = t.getAttribute('x'); t.setAttribute('y', Hb + 14); t.setAttribute('transform', `rotate(-90 ${x} ${Hb + 14})`); t.setAttribute('dominant-baseline', 'central'); });
     }
     // celular: o braço rola de lado; começa mostrando o Desenho 1 e avisa que dá para arrastar
     const caixaB = braco.closest('.braco');
@@ -392,3 +393,16 @@
     passo(); setInterval(passo, 1000);
   });
 })();
+
+/* atalho fixo no celular */
+(() => {
+  const f = document.querySelector('.cta-fixo'); if (!f) return;
+  const rod = document.querySelector('footer'), cook = document.getElementById('aviso-cookies');
+  const ver = () => {
+    const pertoRodape = rod && rod.getBoundingClientRect().top < innerHeight;
+    f.classList.toggle('ve', scrollY > 500 && !pertoRodape && !(cook && !cook.hidden));
+  };
+  addEventListener('scroll', ver, { passive: true }); ver();
+  cook && new MutationObserver(ver).observe(cook, { attributes: true });
+})();
+
