@@ -30,6 +30,7 @@ fbq('track', 'PageView');
 var pgC=null;try{pgC=localStorage.getItem('pg-cookies')}catch(e){}
 gtag('consent','default',{analytics_storage:pgC==='sim'?'granted':'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
 gtag('js',new Date());gtag('config','G-DQKNDTQTC2');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8083446003723195" crossorigin="anonymous"></script>
 
 </head>
 <body class="tema-claro">
@@ -70,6 +71,7 @@ gtag('js',new Date());gtag('config','G-DQKNDTQTC2');</script>
     <li><b>systeme.io:</b> hospedagem do site, formulários e envio de e-mails.</li>
     <li><b>Hotmart:</b> pagamento, entrega dos livros e área do comprador.</li>
     <li><b>Meta (Facebook e Instagram) e Google:</b> medição e anúncios.</li>
+    <li><b>Google AdSense:</b> exibe anúncios nos artigos do blog. O Google e seus parceiros podem usar cookies para mostrar anúncios com base nas suas visitas a este e a outros sites; sem o seu aceite, os anúncios não são personalizados. Você pode desativar a personalização em <a href="https://adssettings.google.com">adssettings.google.com</a>.</li>
     <li><b>GitHub:</b> hospedagem de imagens, do app afinador e da página de bônus.</li>
   </ul>
   Alguns desses serviços podem armazenar dados fora do Brasil, com as garantias previstas na LGPD.
@@ -101,7 +103,7 @@ gtag('js',new Date());gtag('config','G-DQKNDTQTC2');</script>
 <div><button type="button" class="btn btn-linha" data-cookies="nao">Recusar</button><button type="button" class="btn btn-ouro" data-cookies="sim">Aceitar</button></div></div>
 <script>(function(){var a=document.getElementById('aviso-cookies'),v=null;try{v=localStorage.getItem('pg-cookies')}catch(e){}
 if(!v)a.hidden=false;a.addEventListener('click',function(e){var b=e.target.closest('[data-cookies]');if(!b)return;var r=b.dataset.cookies;
-try{localStorage.setItem('pg-cookies',r)}catch(e){}if(r==='sim')gtag('consent','update',{analytics_storage:'granted'});a.hidden=true;});})()</script>
+try{localStorage.setItem('pg-cookies',r)}catch(e){}if(r==='sim')gtag('consent','update',{analytics_storage:'granted',ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted'});a.hidden=true;});})()</script>
 <script src="/assets/js/site.js?v=bece9fb2" defer></script>
 </body>
 </html>
