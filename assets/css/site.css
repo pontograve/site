@@ -526,3 +526,15 @@ body.tema-claro .aviso-corda.alinhado { transform: none !important; }
   .cta-fixo .btn { display: flex; justify-content: center; width: 100%; box-sizing: border-box; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
   .cta-fixo [hidden] { display: none; }
 }
+
+/* teste "que baixista você é" (blog) */
+.teste-baixista { margin: 30px 0; display: grid; gap: 22px; }
+.teste-baixista .tb-q { background: var(--cartao, rgba(0,0,0,.04)); border: 1px solid rgba(141,122,98,.35); border-radius: 18px; padding: 20px; }
+.teste-baixista .tb-q p { margin: 0 0 12px; }
+.teste-baixista button { display: block; width: 100%; text-align: left; margin: 8px 0 0; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(141,122,98,.45); background: transparent; color: inherit; font: inherit; cursor: pointer; transition: background .2s, border-color .2s; }
+.teste-baixista button:hover { border-color: #E2B45E; }
+.teste-baixista .tb-q[data-ok] button { opacity: .45; cursor: default; }
+.teste-baixista .tb-q[data-ok] button.sel { opacity: 1; background: #E2B45E; border-color: #E2B45E; color: #141110; font-weight: 700; }
+.teste-baixista .tb-res { background: #141110; color: #F2ECE2; border-radius: 20px; padding: 28px; border: 2px solid #E2B45E; }
+.teste-baixista .tb-res h3 { font-size: 34px; margin: 8px 0 10px; color: #E2B45E; }
+.teste-baixista .tb-res a:not(.btn) { color: #E2B45E; }
