@@ -555,3 +555,17 @@ body .prosa .ouvir strong { display: block; margin-bottom: 8px; }
 .prosa .ouvir ul { margin: 0; padding-left: 18px; }
 .prosa .ouvir li { margin: 6px 0; }
 .prosa .ouvir li span { display: block; font-size: 15px; color: var(--cinza); }
+
+/* 24/11: sumário do artigo */
+.sumario { background: var(--card); border: 1px solid var(--linha); border-left: 3px solid var(--ouro); border-radius: 12px; padding: 16px 22px; margin: 28px 0 8px; }
+.sumario summary { cursor: pointer; font: 700 12px/1.4 var(--t-texto); letter-spacing: .2em; text-transform: uppercase; color: var(--ouro); list-style: none; }
+.sumario summary::-webkit-details-marker { display: none; }
+.sumario summary::after { content: " ▾"; }
+.sumario:not([open]) summary::after { content: " ▸"; }
+.sumario ol { margin: 12px 0 0; padding-left: 22px; columns: 2 260px; column-gap: 32px; }
+.sumario li { margin: 0 0 6px; break-inside: avoid; font-size: 15px; }
+.sumario a { text-decoration: none; }
+.sumario a:hover { color: var(--ouro); text-decoration: underline; }
+.prosa h2[id] { scroll-margin-top: 90px; }
+body.tema-claro .sumario { background: #fff; border-color: rgba(0, 0, 0, .1); border-left-color: var(--ouro-e); }
+body.tema-claro .sumario summary { color: var(--ouro-e); }
