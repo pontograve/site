@@ -548,3 +548,10 @@ body .prosa .livro-cap .btn { text-decoration: none; color: var(--preto); border
 body .prosa .livro-cap .btn .seta { color: inherit; }
 @media (max-width: 560px) { .prosa .livro-cap { grid-template-columns: 80px 1fr; } .prosa .livro-cap img { width: 80px; } }
 .prosa .aviso-app { display: flex; gap: 12px; align-items: flex-start; margin: 30px 0; padding: 14px 18px; border-left: 4px solid var(--ouro); border-radius: 10px; background: rgba(226,180,94,.08); font-size: 16px; line-height: 1.5; }
+
+/* 24/11: referências para ouvir */
+.prosa .ouvir { margin: 36px 0 0; padding: 18px 22px; border-radius: 14px; border: 1px solid rgba(21,18,16,.15); }
+body .prosa .ouvir strong { display: block; margin-bottom: 8px; }
+.prosa .ouvir ul { margin: 0; padding-left: 18px; }
+.prosa .ouvir li { margin: 6px 0; }
+.prosa .ouvir li span { display: block; font-size: 15px; color: var(--cinza); }
