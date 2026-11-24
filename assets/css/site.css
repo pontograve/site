@@ -537,3 +537,14 @@ body.tema-claro .aviso-corda.alinhado { transform: none !important; }
 .teste-baixista .tb-res { background: #141110; color: #F2ECE2; border-radius: 20px; padding: 28px; border: 2px solid #E2B45E; }
 .teste-baixista .tb-res h3 { font-size: 34px; margin: 8px 0 10px; color: #E2B45E; }
 .teste-baixista .tb-res a:not(.btn) { color: #E2B45E; }
+
+/* 24/11: caixa do capítulo do livro e aviso do app nos artigos */
+.prosa .livro-cap { display: grid; grid-template-columns: 110px 1fr; gap: 20px; align-items: center; margin: 40px 0; padding: 22px; border-radius: 18px; background: #15120F; border: 1px solid rgba(226,180,94,.35); }
+.prosa .livro-cap img { width: 110px; height: auto; border-radius: 6px; box-shadow: 0 10px 24px rgba(0,0,0,.45); margin: 0; }
+.prosa .livro-cap span { display: block; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--ouro); }
+body .prosa .livro-cap strong { display: block; font: 700 19px/1.3 var(--t-texto); color: #F2ECE2; margin: 4px 0 6px; }
+body .prosa .livro-cap p { margin: 0 0 12px; font-size: 15px; line-height: 1.45; color: #D8CFC2; }
+body .prosa .livro-cap .btn { text-decoration: none; color: var(--preto); border: 0; }
+body .prosa .livro-cap .btn .seta { color: inherit; }
+@media (max-width: 560px) { .prosa .livro-cap { grid-template-columns: 80px 1fr; } .prosa .livro-cap img { width: 80px; } }
+.prosa .aviso-app { display: flex; gap: 12px; align-items: flex-start; margin: 30px 0; padding: 14px 18px; border-left: 4px solid var(--ouro); border-radius: 10px; background: rgba(226,180,94,.08); font-size: 16px; line-height: 1.5; }
