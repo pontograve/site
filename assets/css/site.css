@@ -569,3 +569,19 @@ body .prosa .ouvir strong { display: block; margin-bottom: 8px; }
 .prosa h2[id] { scroll-margin-top: 90px; }
 body.tema-claro .sumario { background: #fff; border-color: rgba(0, 0, 0, .1); border-left-color: var(--ouro-e); }
 body.tema-claro .sumario summary { color: var(--ouro-e); }
+
+/* 24/11: botão "Ouvir" nas tablaturas */
+.tab-ouvir { margin: 24px 0; }
+.tab-ouvir pre { margin: 0 0 10px; }
+.tab-ouvir pre span.on { background: var(--ouro); color: var(--preto); border-radius: 3px; }
+.tab-barra { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tab-barra button, .tab-barra select { font: 600 13px var(--t-texto); padding: 6px 12px; border-radius: 8px; border: 1px solid var(--linha); background: transparent; color: inherit; cursor: pointer; }
+.tab-barra button.sel { border-color: var(--ouro); color: var(--ouro); background: rgba(226, 180, 94, .1); }
+.tab-barra .tb-play { background: var(--ouro); border-color: var(--ouro); color: var(--preto); }
+.tab-barra select { background: var(--card); }
+.tab-barra .tb-st { font-size: 13px; color: var(--cinza); }
+.tab-barra .tb-aviso { font-size: 12px; color: var(--cinza); font-style: italic; }
+body.tema-claro .tab-barra button, body.tema-claro .tab-barra select { border-color: rgba(0, 0, 0, .18); }
+body.tema-claro .tab-barra button.sel { border-color: var(--ouro-e); color: var(--ouro-e); }
+body.tema-claro .tab-barra select { background: #fff; }
+body.tema-claro .tab-ouvir pre span.on { background: var(--ouro-e); color: #fff; }
