@@ -276,6 +276,9 @@ body.tema-claro .btn-linha { color: var(--tinta); border-color: rgba(26, 22, 18,
 body.tema-claro .btn-linha:hover { color: var(--ouro-e); border-color: var(--ouro-e); }
 body.tema-claro .btn-ouro::before { background: var(--tinta); }
 body.tema-claro .btn-ouro:hover { color: var(--papel); }
+/* 26/11: botão dourado dentro de caixa escura (Mapa, "Vai mais fundo no livro"): no hover sobe o marfim e o texto fica preto (o escuro sumia no fundo) */
+body.tema-claro .aviso-cookies .btn-ouro::before, body.tema-claro .brinde .btn-ouro::before,body .prosa .convite-mapa .btn-ouro::before, body .prosa .livro-cap .btn-ouro::before { background: var(--marfim); }
+body.tema-claro .aviso-cookies .btn-ouro:hover, body.tema-claro .brinde .btn-ouro:hover,body .prosa .convite-mapa .btn-ouro:hover, body .prosa .livro-cap .btn-ouro:hover { color: var(--preto); }
 @media (max-width: 960px) { body.tema-claro .nav ul { background: rgba(246, 241, 232, .98); } }
 
 /* Hero editorial: texto à esquerda, foto emoldurada à direita, cordas sobre o papel */
@@ -585,3 +588,4 @@ body.tema-claro .tab-barra button, body.tema-claro .tab-barra select { border-co
 body.tema-claro .tab-barra button.sel { border-color: var(--ouro-e); color: var(--ouro-e); }
 body.tema-claro .tab-barra select { background: #fff; }
 body.tema-claro .tab-ouvir pre span.on { background: var(--ouro-e); color: #fff; }
+body.tema-claro .aviso-cookies .btn-linha:hover { color: var(--ouro); border-color: var(--ouro); }
